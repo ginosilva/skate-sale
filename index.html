@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skate Shop Directory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        h2 {
+            margin-top: 2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Skate Shop Directory</h1>
+
+    <script>
+        const csvFilePath = 'data.csv';
+
+        function createTable(country, shops) {
+            const table = document.createElement('table');
+            const thead = document.createElement('thead');
+            const tbody = document.createElement('tbody');
+
+            const headerRow = document.createElement('tr');
+            ['Shop Name', 'Main URL', 'City', 'Sale URL'].forEach(headerText => {
+                const th = document.createElement('th');
+                th.textContent = headerText;
+                headerRow.appendChild(th);
+            });
+
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            shops.forEach(shop => {
+                const row = document.createElement('tr');
+
+                [shop.shopName, shop.mainURL, shop.city, shop.saleURL].forEach((data, index) => {
+    const cell = document.createElement('td');
+
+    if (index === 1) {
+        const link = document.createElement('a');
+        link.href = data;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = 'Visit Website';
+        cell.appendChild(link);
+    } else if (index === 3) {
+        const link = document.createElement('a');
+        link.href = data;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = 'Shop Sales';
+        cell.appendChild(link);
+    } else {
+        cell.textContent = data;
+    }
+
+    row.appendChild(cell);
+});
+
+
+                tbody.appendChild(row);
+            });
+
+            table.appendChild(tbody);
+            return table;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch(csvFilePath)
+                .then(response => response.text())
+                .then(csvData => {
+                    const lines = csvData.trim().split('\n').slice(1);
+                    const delimiter = lines[0].includes('\t') ? '\t' : ',';
+                    const shopsByCountry = {};
+
+                    lines.forEach(line => {
+                        const [country, shopName, mainURL, city, saleURL] = line.split(delimiter).map(column => column.trim());
+console.log(saleURL);
+
+                        if (!shopsByCountry[country]) {
+                            shopsByCountry[country] = [];
+                        }
+
+                        shopsByCountry[country].push({shopName, mainURL, city, saleURL});
+                    });
+
+                    for (const country in shopsByCountry) {
+                        const countryHeading = document.createElement('h2');
+                        countryHeading.textContent = country;
+                        document.body.appendChild(countryHeading);
+
+                        const table = createTable(country, shopsByCountry[country]);
+                        document.body.appendChild(table);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    const errorMessage = document.createElement('p');
+                    errorMessage.textContent = 'An error occurred while fetching the data. Please check the console for more information.';
+                    errorMessage.style.color = 'red';
+                    document.body.appendChild(errorMessage);
+                });
+        });
+
+    </script>
+</body>
+</html>
+                       
+
