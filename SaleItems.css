@@ -1,0 +1,70 @@
+.sale-items {
+  padding: 20px;
+}
+
+.store-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 20px;
+}
+
+.sale-item {
+  border: 1px solid #ccc;
+  padding: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.sale-item img {
+  width: 100%;
+  height: auto;
+}
+
+.sale-item p {
+  margin: 10px 0;
+}
+
+.sale-item p:nth-child(5) {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.sale-item p:nth-child(6) {
+  text-decoration: line-through;
+  font-size: 0.9em;
+}
+
+.sale-item p.currency-symbol {
+  font-size: 0.9em;
+  margin-right: 5px;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #ccc;
+  border: none;
+  border-radius: 5px;
+  color: #333;
+  cursor: pointer;
+  font-size: 1em;
+  margin: 0 10px;
+  padding: 10px 20px;
+}
+
+.pagination button:hover {
+  background-color: #999;
+  color: #fff;
+}
+
+.star-icon {
+  cursor: pointer;
+}
+
+.starred {
+  color: gold;
+}
+
